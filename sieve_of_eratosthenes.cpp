@@ -7,7 +7,7 @@ int main()
     vector<int> prime;
     int n = 53;
     int p = sqrt(n);
-    for (int i =0; i < n; i++) {
+    for (int i =0; i<=n; i++) {
         prime.push_back(1);
     }
     
