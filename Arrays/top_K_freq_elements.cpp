@@ -11,19 +11,29 @@ Output: [1]*/
     vector<int> topKFrequent(vector<int>& nums, int k) {
         unordered_map<int,int> freq_elem;
         vector<int> result;
-        priority_queue<pair<int,int>> pq;
         
         for (int i=0;i<nums.size();i++) {
             freq_elem[nums[i]]++;
         }
         
+        int size = nums.size();
+        vector<int> A[size+1];
+        
         for (auto it : freq_elem) {
-            pq.push(make_pair(it.second,it.first));
+            A[it.second].push_back(it.first);
         }
         
-        for (int i=0;i<k;i++) {
-            result.push_back(pq.top().second);
-            pq.pop();
+        int count = 0;
+        for (int i=size;i>=0;i--) {
+            if (A[i].size() > 0) {
+                if (count < k) {
+                    for (auto it : A[i]) {
+                        result.push_back(it);
+                        count++;
+                    }
+                } 
+            }
         }
+    
         return result;
     }
