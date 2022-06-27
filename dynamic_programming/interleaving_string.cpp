@@ -29,3 +29,20 @@ Output: false*/
         return isInterleave_util(s1,s2,s3,s1.length(), s2.length(), s3.length());
     }
 
+//DP Solution
+    bool isInterleave(string s1, string s2, string s3) {
+        if(s3.length()!=s1.length()+s2.length()) return false;
+        int m = s1.length();
+        int n = s2.length();
+        bool dp_table[m+1][n+1];
+        dp_table[0][0] = true;
+        for (int i=0;i<=m;i++) {
+            for (int j=0;j<=n;j++) {
+                if (i==0 && j==0) dp_table[i][j] = true;
+                else if (i==0) dp_table[i][j] = dp_table[i][j-1] && s2[j-1] == s3[i+j-1];
+                else if (j==0) dp_table[i][j] = dp_table[i-1][j] && s1[i-1] == s3[i+j-1];
+                else dp_table[i][j] = (dp_table[i-1][j] && s1[i-1] == s3[i+j-1]) || (dp_table[i][j-1] && s2[j-1] == s3[i+j-1]);
+            }
+        }
+        return dp_table[m][n];
+    }
