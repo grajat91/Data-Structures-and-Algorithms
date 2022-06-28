@@ -32,3 +32,22 @@ babgbag
     int numDistinct(string s, string t) {
         return numDistinct_util(s,t,s.length(),t.length());
     }
+
+
+//Dynamic Programming
+    int numDistinct(string s, string t) {
+        int m = s.length();
+        int n = t.length();
+        if (n > m) return 0;
+        double dp_table[m+1][n+1];
+        int a = 1;
+        for (int i=0;i<=n;i++) dp_table[0][i] = 0;
+        for (int i=0;i<=m;i++) dp_table[i][0] = 1;
+        for (int i=1;i<=m;i++) {
+            for (int j=1;j<=n;j++) {
+                dp_table[i][j] = dp_table[i-1][j];
+                if (s[i-1] == t[j-1]) dp_table[i][j] +=dp_table[i-1][j-1];
+            }
+        }
+        return a*dp_table[m][n];
+    }
