@@ -10,10 +10,10 @@ Output: [1,3,5,2,4]
 Example 2:
 Input: head = [2,1,3,5,6,4,7]
 Output: [2,3,6,7,1,5,4]*/
-
- */
+*/
 class Solution {
 public:
+    //O(N) space
     ListNode* oddEvenList(ListNode* head) {
         if (head == nullptr || head->next == nullptr || head->next->next == nullptr) return head;
         ListNode* curr = head;
@@ -44,6 +44,39 @@ public:
         }
         
         last->next = nullptr;
+        return head;
+    }
+    
+    //O(1) space
+        ListNode* oddEvenList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr || head->next->next == nullptr) return head;
+        ListNode* curr = head;
+        ListNode* prev = nullptr;
+        ListNode* last;
+        ListNode* last_even = nullptr;
+        ListNode* even;
+        int size = 1;
+        while (curr->next != nullptr) {
+            prev = curr;
+            curr = curr->next;
+            size++;
+        }
+        if (size%2 == 0) {
+            last = prev;
+            last_even = curr;
+        }
+        else last = curr;
+        prev = last;
+        curr = head;
+        while (curr != prev) {
+            even = curr->next; 
+            last->next = even;
+            last = last->next;
+            curr->next = curr->next->next;
+            curr = curr->next;
+        }
+        last->next = last_even;
+        
         return head;
     }
 };
