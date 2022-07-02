@@ -19,7 +19,7 @@ Input: s = "))(("
 Output: ""
 Explanation: An empty string is also valid.
 */
-
+//O(N) space
     string minRemoveToMakeValid(string s) {
         stack<int> parantheses_stack;
         stack<int> bad_stack;
@@ -42,4 +42,19 @@ Explanation: An empty string is also valid.
             bad_stack.pop();
         }
         return s;
+    }
+
+//O(1) space
+
+    int minAddToMakeValid(string s) {
+        int left=0;
+        int right=0;
+        for (auto c : s) {
+            if (c == '(') left++;
+            else {
+                if (left==0) right++;
+                else left--;
+            }
+        }
+        return left+right;
     }
