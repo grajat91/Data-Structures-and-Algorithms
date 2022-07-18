@@ -79,4 +79,43 @@ public:
         
         return head;
     }
+    
+    //Another O(1) solution
+    ListNode* oddEvenList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) return head;
+        ListNode* os = nullptr;
+        ListNode* es = nullptr;
+        ListNode* oe = nullptr;
+        ListNode* ee = nullptr;
+        
+        ListNode* curr = head;
+        int counter = 1;
+        while (curr != nullptr) {
+            if (counter % 2 == 0) {
+                if (es == nullptr) {
+                    es = curr;
+                    ee = es;
+                } else {
+                    ee->next = curr;
+                    ee = ee->next;
+                }
+            } else {
+                if (os == nullptr) {
+                    os = curr;
+                    oe = os;
+                } else {
+                    oe->next = curr;
+                    oe = oe->next;
+                }
+            }
+            curr = curr->next;
+            counter++;
+        }
+        if (os == nullptr || es == nullptr) return head;
+        else {
+            oe->next = es;
+            ee->next = nullptr;
+            return os;
+        }
+    }
 };
