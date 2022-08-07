@@ -12,7 +12,19 @@ Explanation: there are four ways to make up the amount:
 5=2+2+1
 5=2+1+1+1
 5=1+1+1+1+1*/
+//RECURSION
+    int change_util(int amount, vector<int>& coins, int n) {
+        if (amount == 0) return 1;
+        if (n==0) return 0;
+        if (coins[n-1] > amount) return change_util(amount, coins,n-1);
+        return change_util(amount, coins,n-1) + change_util(amount-coins[n-1], coins,n);
+    }
 
+    int change(int amount, vector<int>& coins) {
+        return change_util(amount,coins,coins.size());
+    }
+
+//TABULATION
     int change(int amount, vector<int>& coins) {
         int num_coins = coins.size();
         int dp[amount+1][num_coins+1];
