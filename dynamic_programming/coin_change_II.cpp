@@ -23,7 +23,27 @@ Explanation: there are four ways to make up the amount:
     int change(int amount, vector<int>& coins) {
         return change_util(amount,coins,coins.size());
     }
+//MEMOIZATION
+    vector<vector<int>>memo;
+    int change_util(int amount, vector<int>& coins, int n) {
+        if (memo[amount][n] != -1) return memo[amount][n];
+        if (amount == 0) return 1;
+        if (n==0) return 0;
+        
+        if (coins[n-1] > amount) {
+            memo[amount][n] =  change_util(amount, coins,n-1);
+            return memo[amount][n];
+        }
+        memo[amount][n] = change_util(amount, coins,n-1) + change_util(amount-coins[n-1], coins,n);
+        return memo[amount][n];
+    }
+    
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        memo.resize(amount+1,vector<int>(n+1,-1));
+        return memo[amount][n]=change_util(amount,coins,n);
 
+    }
 //TABULATION
     int change(int amount, vector<int>& coins) {
         int num_coins = coins.size();
