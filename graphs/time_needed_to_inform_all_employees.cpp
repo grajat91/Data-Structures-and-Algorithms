@@ -67,3 +67,21 @@ It is guaranteed that all the employees can be informed.*/
         }
         return max_time;
     }
+
+//DFS based solution
+    int numOfMinutes_dfs(vector<int> manager_to_subs[], vector<int>& informTime, int headID) {
+        int result = 0;
+        for (auto it : manager_to_subs[headID]) {
+            result = max(result,numOfMinutes_dfs(manager_to_subs,informTime,it));
+        }
+        return result+informTime[headID];
+    } 
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+        //unordered_map<int,vector<int>> manager_to_subs;
+        vector<int>manager_to_subs[n];
+        for (int i=0;i<n;i++) {
+            if (manager[i] != -1) 
+            manager_to_subs[manager[i]].push_back(i);
+        }
+        return numOfMinutes_dfs(manager_to_subs,informTime,headID);
+    }
