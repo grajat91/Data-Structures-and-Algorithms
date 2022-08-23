@@ -45,3 +45,10 @@ The number of nodes in the tree is in the range [0, 5000].
         }
         return false;
     }
+
+//DFS solution
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) return false;
+        if (root->val == targetSum && !root->left && !root->right) return true;
+        return (hasPathSum(root->left, targetSum-root->val) || hasPathSum(root->right, targetSum-root->val));
+    }
