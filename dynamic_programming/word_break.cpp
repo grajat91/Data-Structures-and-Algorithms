@@ -13,6 +13,23 @@ Output: true
 Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
 Note that you are allowed to reuse a dictionary word.*/
 
+//RECURSION SOLUTION
+    bool wordBreak_util(string s, unordered_set<string> wordset) {
+        int n = s.size();
+        if (n==0) return true;
+        for (int i=0;i<n;i++) {
+            if ((wordset.find(s.substr(0,i+1)) != wordset.end()) && wordBreak_util(s.substr(i+1),wordset)) return true;
+        }
+        return false;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string>wordset;
+        for (auto word : wordDict) wordset.insert(word);
+        int n = s.size();
+        //return wordBreak_util(s,wordset);
+    }
+
+//DYNAMIC PROGRAMMING SOLUTION
     bool wordBreak(string s, vector<string>& wordDict) {
         unordered_set<string> wordset;
         int n = s.length();
